@@ -612,6 +612,54 @@ input[type="file"] {
     opacity: 0.8;
 }
 
+/* Investment Flow Styles */
+.investment-flow-box {
+    background-color: rgba(0,0,0,0.2);
+    padding: 30px 40px;
+    border-radius: 5px;
+}
+
+.investment-flow-box h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.investment-flow-box ol {
+    line-height: 2;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    padding-left: 30px;
+}
+
+.action-center {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.agreement-viewer {
+    border: 1px solid #004e92;
+    padding: 20px;
+    margin: 20px 0;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: rgba(0, 4, 40, 0.7);
+    text-align: justify;
+    line-height: 1.7;
+}
+
+.signature-pad-placeholder {
+    border: 2px dashed #004e92;
+    padding: 40px;
+    text-align: center;
+    margin: 30px 0;
+    border-radius: 5px;
+}
+
+.checkbox-label {
+    cursor: pointer;
+}
+
 /* Footer */
 footer {
     text-align: center;

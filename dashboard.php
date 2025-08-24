@@ -92,7 +92,7 @@ require_once 'config/db_connect.php';
                                 <?php echo htmlspecialchars($project['pitch_line1']); ?><br>
                                 <?php echo htmlspecialchars($project['pitch_line2']); ?>
                             </p>
-                            <button class="btn-invest">Invest Now</button>
+                            <a href="investment_flow.php?project_id=<?php echo $project['id']; ?>" class="btn-invest">Invest Now</a>
                         </div>
                     </div>
             <?php
