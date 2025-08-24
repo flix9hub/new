@@ -181,6 +181,29 @@ if ($check_projects_empty && $check_projects_empty->num_rows == 0) {
     }
 }
 
+// --- SQL to Insert Sample Investment Data ---
+$check_investments_empty = $conn->query("SELECT id FROM `investments` LIMIT 1");
+if ($check_investments_empty && $check_investments_empty->num_rows == 0) {
+    // Insert an investment for user 1 in project 1
+    $conn->query("INSERT INTO `investments` (`user_id`, `project_id`, `amount`, `tenure_months`, `status`) VALUES (1, 1, 75000.00, 3, 'active')");
+    $investment_id1 = $conn->insert_id;
+
+    // Insert some ledger entries for this investment
+    if($investment_id1 > 0) {
+        $conn->query("INSERT INTO `investment_ledger` (`investment_id`, `payout_date`, `payout_amount`, `notes`) VALUES ($investment_id1, NOW() - INTERVAL 2 MONTH, 3750.00, 'Monthly Return')");
+        $conn->query("INSERT INTO `investment_ledger` (`investment_id`, `payout_date`, `payout_amount`, `notes`) VALUES ($investment_id1, NOW() - INTERVAL 1 MONTH, 3750.00, 'Monthly Return')");
+    }
+
+    // Insert another investment for user 1 in project 2
+    $conn->query("INSERT INTO `investments` (`user_id`, `project_id`, `amount`, `tenure_months`, `status`) VALUES (1, 2, 100000.00, 4, 'active')");
+    $investment_id2 = $conn->insert_id;
+    if($investment_id2 > 0) {
+        $conn->query("INSERT INTO `investment_ledger` (`investment_id`, `payout_date`, `payout_amount`, `notes`) VALUES ($investment_id2, NOW() - INTERVAL 1 MONTH, 6000.00, 'Monthly Return')");
+    }
+
+    echo "<p style='color:green;'>Sample investment data inserted successfully.</p>";
+}
+
 echo "<h2>Installation Complete!</h2>";
 echo "<p>You can now proceed to use the website. It is recommended to delete this `install.php` file for security reasons.</p>";
 

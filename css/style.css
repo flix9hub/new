@@ -545,6 +545,73 @@ input[type="file"] {
     background-color: #0066b2;
 }
 
+/* My Investments Table Styles */
+.my-investments-container {
+    overflow-x: auto; /* For responsive tables */
+}
+
+.investments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 1rem;
+}
+
+.investments-table th, .investments-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #004e92;
+    white-space: nowrap;
+}
+
+.investments-table th {
+    background-color: rgba(0, 78, 146, 0.3);
+    font-size: 1.1rem;
+}
+
+.investments-table tr:last-child td {
+    border-bottom: none;
+}
+
+.investments-table tr:hover td {
+    background-color: rgba(0, 78, 146, 0.2);
+}
+
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: capitalize;
+}
+
+.status-badge.status-active { background-color: #28a745; }
+.status-badge.status-completed { background-color: #6c757d; }
+.status-badge.status-withdrawn { background-color: #dc3545; }
+
+.actions-cell {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-action {
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: opacity 0.3s ease;
+}
+
+.btn-action.extend { background-color: #007bff; }
+.btn-action.withdraw { background-color: #ffc107; color: #000; }
+
+.btn-action:hover {
+    opacity: 0.8;
+}
+
 /* Footer */
 footer {
     text-align: center;

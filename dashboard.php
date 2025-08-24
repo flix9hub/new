@@ -104,11 +104,71 @@ require_once 'config/db_connect.php';
         </div>
     </div>
 
-    <!-- My Investments Section (Placeholder) -->
+    <!-- My Investments Section -->
     <div class="dashboard-section">
         <h2>My Investments</h2>
-        <div class="placeholder-content">
-            <p>Your investment portfolio will be displayed here once you make your first investment.</p>
+        <div class="my-investments-container">
+            <?php
+            $user_id = $_SESSION['user_id'];
+            $sql = "SELECT
+                        i.id,
+                        p.title AS project_title,
+                        i.amount,
+                        i.investment_date,
+                        i.tenure_months,
+                        i.status,
+                        (SELECT SUM(il.payout_amount) FROM investment_ledger il WHERE il.investment_id = i.id) AS total_returns
+                    FROM
+                        investments i
+                    JOIN
+                        projects p ON i.project_id = p.id
+                    WHERE
+                        i.user_id = ?
+                    ORDER BY
+                        i.investment_date DESC";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result && $result->num_rows > 0) {
+            ?>
+                <table class="investments-table">
+                    <thead>
+                        <tr>
+                            <th>Project Title</th>
+                            <th>Amount Invested</th>
+                            <th>Investment Date</th>
+                            <th>Tenure</th>
+                            <th>Total Returns</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($investment = $result->fetch_assoc()) { ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($investment['project_title']); ?></td>
+                                <td>₹<?php echo number_format($investment['amount']); ?></td>
+                                <td><?php echo date("M j, Y", strtotime($investment['investment_date'])); ?></td>
+                                <td><?php echo htmlspecialchars($investment['tenure_months']); ?> Months</td>
+                                <td>₹<?php echo number_format($investment['total_returns'] ?? 0, 2); ?></td>
+                                <td><span class="status-badge status-<?php echo htmlspecialchars($investment['status']); ?>"><?php echo ucfirst($investment['status']); ?></span></td>
+                                <td class="actions-cell">
+                                    <a href="#" class="btn-action extend">Extend</a>
+                                    <a href="#" class="btn-action withdraw">Withdraw</a>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            <?php
+            } else {
+                echo '<div class="placeholder-content"><p>You have not made any investments yet.</p></div>';
+            }
+            $stmt->close();
+            ?>
         </div>
     </div>
 
