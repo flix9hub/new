@@ -7,7 +7,7 @@
         <div class="trailer-item">
             <div class="video-container">
                 <!-- In-stream video player placeholder -->
-                <video controls poster="images/trailer-poster-placeholder-1.png" src="#" preload="none" style="width:100%; background-color:#000;"></video>
+                <video controls poster="images/poster6.jpg" src="#" preload="none" style="width:100%; background-color:#000;"></video>
             </div>
             <div class="trailer-info">
                 <div class="investment-snippet">
@@ -20,7 +20,7 @@
         <!-- Trailer Item 2 -->
         <div class="trailer-item">
             <div class="video-container">
-                <video controls poster="images/trailer-poster-placeholder-2.png" src="#" preload="none" style="width:100%; background-color:#000;"></video>
+                <video controls poster="images/poster7.jpg" src="#" preload="none" style="width:100%; background-color:#000;"></video>
             </div>
             <div class="trailer-info">
                 <div class="investment-snippet">
@@ -33,7 +33,7 @@
         <!-- Trailer Item 3 -->
         <div class="trailer-item">
             <div class="video-container">
-                <video controls poster="images/trailer-poster-placeholder-3.png" src="#" preload="none" style="width:100%; background-color:#000;"></video>
+                <video controls poster="images/poster8.jpg" src="#" preload="none" style="width:100%; background-color:#000;"></video>
             </div>
             <div class="trailer-info">
                 <div class="investment-snippet">
