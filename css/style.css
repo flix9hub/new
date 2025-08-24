@@ -1,0 +1,344 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Basic Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #000428; /* Fallback color */
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/homepage-bg.jpg') no-repeat center center/cover;
+    opacity: 0.2; /* Adjust opacity here */
+    z-index: -2;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #000428, #004e92);
+    opacity: 0.85; /* Adjust opacity here */
+    z-index: -1;
+    box-shadow: inset 0 0 150px rgba(0,0,0,0.5); /* Vignette effect */
+}
+
+/* Header and Navigation */
+header {
+    padding: 1rem 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 78, 146, 0.5);
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #a9c1de;
+}
+
+/* Logo Styling */
+.logo-container {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#logo {
+    width: 200px; /* Placeholder width */
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.homepage .main-quote {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 40px 20px;
+    line-height: 1.4;
+}
+
+.carousel-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px 0;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+.carousel::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.poster {
+    flex: 0 0 auto;
+    width: 250px;
+    margin: 0 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+.poster:hover {
+    transform: scale(1.05);
+}
+
+.poster img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Static Page Styles */
+.static-page {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: rgba(0, 4, 40, 0.6);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.static-page h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #004e92;
+    padding-bottom: 10px;
+}
+
+.content-container p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* Trailer Page Styles */
+.trailer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.trailer-item {
+    background-color: rgba(0, 4, 40, 0.7);
+    border: 1px solid #004e92;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.video-container {
+    background-color: #000;
+}
+
+.video-container video {
+    width: 100%;
+    display: block;
+}
+
+.trailer-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.investment-snippet {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.investment-snippet p {
+    margin: 0;
+}
+
+.hot-deal {
+    background-color: #ffc107;
+    color: #000;
+    padding: 12px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+/* Investment Page Styles */
+.investment-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+}
+
+.investment-item {
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) 2fr;
+    gap: 30px;
+    align-items: flex-start;
+    background-color: rgba(0, 4, 40, 0.7);
+    border: 1px solid #004e92;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.investment-item .hot-deal {
+    margin-bottom: 20px;
+}
+
+.investment-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.investment-details li {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.investment-details li strong {
+    color: #a9c1de;
+}
+
+.investment-pitch {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.6;
+    margin-top: 20px;
+    color: #ffc107;
+}
+
+@media (max-width: 992px) {
+    .investment-item {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Contact Form Styles */
+.contact-form-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #004e92;
+    background-color: #000428;
+    color: #ffffff;
+    font-size: 1rem;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #a9c1de;
+    box-shadow: 0 0 8px rgba(169, 193, 222, 0.5);
+}
+
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #ffc107;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #ffca2c;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+    background-color: rgba(0, 0, 0, 0.2);
+}
