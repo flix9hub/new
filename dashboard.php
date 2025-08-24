@@ -6,12 +6,58 @@ require_once 'scripts/auth_check.php';
 include 'includes/header.php';
 ?>
 
+<?php
+// We need the database connection on this page
+require_once 'config/db_connect.php';
+?>
 <div class="dashboard-container">
     <h1>Investor Dashboard</h1>
 
     <div class="dashboard-actions">
         <a href="#" class="btn-dashboard-action">Download Investment Agreement</a>
         <a href="#" class="btn-dashboard-action">Raise a Support Ticket</a>
+    </div>
+
+    <!-- Notifications Section -->
+    <div class="dashboard-section">
+        <h2>Notifications</h2>
+        <div class="notification-list">
+            <?php
+            <?php
+            // Fetch notifications for the user using the new schema
+            $user_id = $_SESSION['user_id'];
+
+            $sql = "SELECT n.id, n.subject, n.message, n.created_at
+                    FROM notifications n
+                    LEFT JOIN user_notifications un ON n.id = un.notification_id AND un.user_id = ?
+                    WHERE (n.is_broadcast = 1 OR n.target_user_id = ?)
+                    AND un.id IS NULL
+                    ORDER BY n.created_at DESC";
+
+            $stmt = $conn->prepare($sql);
+            // Bind the user_id to both placeholders
+            $stmt->bind_param("ii", $user_id, $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                while ($notification = $result->fetch_assoc()) {
+                    echo '<div class="notification-item">';
+                    echo '  <div class="notification-content">';
+                    echo '      <strong>' . htmlspecialchars($notification['subject']) . '</strong>';
+                    echo '      <p>' . htmlspecialchars($notification['message']) . '</p>';
+                    echo '      <small>Posted on: ' . date("F j, Y, g:i a", strtotime($notification['created_at'])) . '</small>';
+                    echo '  </div>';
+                    echo '  <a href="scripts/mark_notification_read.php?id=' . $notification['id'] . '" class="btn-mark-read" title="Dismiss this notification">Mark as Read</a>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<div class="placeholder-content"><p>No new notifications.</p></div>';
+            }
+            $stmt->close();
+            ?>
+            ?>
+        </div>
     </div>
 
     <!-- Upcoming Investments Section -->

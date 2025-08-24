@@ -55,7 +55,54 @@ if ($conn->query($sql_create_users_table) === TRUE) {
     echo "<p style='color:red;'>Error creating table 'users': " . $conn->error . "</p>";
 }
 
-// You can add more table creation queries here later
+// --- Dropping old notifications table for schema change ---
+$conn->query("DROP TABLE IF EXISTS `notifications`");
+echo "<p style='color:orange;'>Old 'notifications' table dropped if it existed.</p>";
+
+// --- SQL to Create New Notifications Table ---
+$sql_create_notifications_table = "
+CREATE TABLE IF NOT EXISTS `notifications` (
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `subject` VARCHAR(255) NOT NULL,
+    `message` TEXT NOT NULL,
+    `is_broadcast` TINYINT(1) NOT NULL DEFAULT 0,
+    `target_user_id` INT(11) UNSIGNED DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+";
+if ($conn->query($sql_create_notifications_table) === TRUE) {
+    echo "<p style='color:green;'>Table 'notifications' (new schema) created successfully.</p>";
+} else {
+    echo "<p style='color:red;'>Error creating new 'notifications' table: " . $conn->error . "</p>";
+}
+
+// --- SQL to Create User Notifications Table for read status ---
+$sql_create_user_notifications_table = "
+CREATE TABLE IF NOT EXISTS `user_notifications` (
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT(11) UNSIGNED NOT NULL,
+    `notification_id` INT(11) UNSIGNED NOT NULL,
+    `is_read` TINYINT(1) NOT NULL DEFAULT 0,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`notification_id`) REFERENCES `notifications`(`id`) ON DELETE CASCADE,
+    UNIQUE KEY `user_notification_read` (`user_id`, `notification_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+";
+if ($conn->query($sql_create_user_notifications_table) === TRUE) {
+    echo "<p style='color:green;'>Table 'user_notifications' created successfully.</p>";
+} else {
+    echo "<p style='color:red;'>Error creating 'user_notifications' table: " . $conn->error . "</p>";
+}
+
+// --- SQL to Insert Sample Notifications ---
+// This is for demonstration purposes. In production, you'd remove this part.
+$check_empty = $conn->query("SELECT id FROM `notifications` LIMIT 1");
+if ($check_empty && $check_empty->num_rows == 0) {
+    $conn->query("INSERT INTO `notifications` (`subject`, `message`, `is_broadcast`) VALUES ('Welcome to Flix9 Hub!', 'We are excited to have you on board. Explore our upcoming projects.', 1)");
+    $conn->query("INSERT INTO `notifications` (`subject`, `message`, `target_user_id`) VALUES ('Documents Under Review', 'Hi, we have received your identity documents and they are under review.', 1)");
+    echo "<p style='color:green;'>Sample notifications inserted successfully.</p>";
+}
 
 echo "<h2>Installation Complete!</h2>";
 echo "<p>You can now proceed to use the website. It is recommended to delete this `install.php` file for security reasons.</p>";

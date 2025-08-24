@@ -501,6 +501,50 @@ input[type="file"] {
     background-color: #2ebf4f;
 }
 
+/* Notification Styles */
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0,0,0,0.2);
+    padding: 20px;
+    border-radius: 5px;
+    border-left: 5px solid #ffc107;
+}
+
+.notification-content p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.notification-content small {
+    color: #a9c1de;
+    font-style: italic;
+}
+
+.btn-mark-read {
+    background-color: #004e92;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    margin-left: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-mark-read:hover {
+    background-color: #0066b2;
+}
+
 /* Footer */
 footer {
     text-align: center;
