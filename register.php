@@ -2,6 +2,19 @@
 
 <div class="static-page">
     <h1>Create Your Investor Account</h1>
+
+    <?php
+    session_start(); // Start session to access messages
+    if (isset($_SESSION['error_messages'])) {
+        echo '<div class="form-messages error">';
+        foreach ($_SESSION['error_messages'] as $error) {
+            echo '<p>' . htmlspecialchars($error) . '</p>';
+        }
+        echo '</div>';
+        unset($_SESSION['error_messages']); // Clear messages after displaying
+    }
+    ?>
+
     <p style="text-align:center; margin-bottom: 30px;">Join Flix9 Hub to turn your passion for cinema into profit.</p>
 
     <div class="contact-form-container">

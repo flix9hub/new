@@ -388,6 +388,33 @@ input[type="file"] {
     }
 }
 
+/* Form Message Styles */
+.form-messages {
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.form-messages p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+.form-messages.error {
+    background-color: rgba(220, 53, 69, 0.4);
+    border-color: rgba(220, 53, 69, 0.8);
+    color: #fff;
+}
+
+.form-messages.success {
+    background-color: rgba(40, 167, 69, 0.4);
+    border-color: rgba(40, 167, 69, 0.8);
+    color: #fff;
+}
 
 /* Footer */
 footer {
