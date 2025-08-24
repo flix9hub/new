@@ -188,12 +188,21 @@ main {
 }
 
 .video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
     background-color: #000;
+    border-radius: 8px; /* Match item corner radius */
 }
 
-.video-container video {
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    display: block;
+    height: 100%;
+    border: 0;
 }
 
 .trailer-info {

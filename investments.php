@@ -6,7 +6,7 @@
         <!-- Investment Item 1 -->
         <div class="investment-item">
             <div class="video-container">
-                <video controls poster="images/poster9.jpg" src="#" preload="none" style="width:100%; background-color:#000;"></video>
+                <iframe src="https://www.youtube.com/embed/zeGb3MBZY6Y?si=dgDftArYxrTYQGCQ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             <div class="investment-info">
                 <p class="hot-deal">🎬 Hot Deal from Velan Productions (WEB) 🔥 Limited Ticket Size – Grab Yours Before It’s Gone!</p>
@@ -28,7 +28,7 @@
         <!-- Investment Item 2 -->
         <div class="investment-item">
             <div class="video-container">
-                <video controls poster="images/poster10.jpg" src="#" preload="none" style="width:100%; background-color:#000;"></video>
+                <iframe src="https://www.youtube.com/embed/_zWD-SQ-g4g?si=XOwQZ6PRW-dv7Cjx" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
             <div class="investment-info">
                 <p class="hot-deal">🎬 Hot Deal from Kumar Productions (WEB) 🔥 Limited Ticket Size – Grab Yours Before It’s Gone!</p>
