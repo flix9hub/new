@@ -125,10 +125,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssssssss", $fullname, $email, $mobile, $hashed_password, $address, $city, $state, $country, $id_front_path, $id_back_path, $passport_path);
 
     if ($stmt->execute()) {
-        // --- TODO: OTP Generation and Email Sending will happen here ---
-        $_SESSION['success_message'] = "Registration successful! Please login.";
-        header('Location: ../login.php');
-        exit();
+        // Get the new user's ID
+        $user_id = $conn->insert_id;
+
+        // Generate a 6-digit OTP
+        $otp = rand(100000, 999999);
+
+        // Store the OTP in the database for the user
+        $otp_stmt = $conn->prepare("UPDATE users SET otp = ? WHERE id = ?");
+        $otp_stmt->bind_param("si", $otp, $user_id);
+        $otp_stmt->execute();
+        $otp_stmt->close();
+
+        // --- Send OTP Email using PHPMailer ---
+        require '../vendor/phpmailer/src/Exception.php';
+        require '../vendor/phpmailer/src/PHPMailer.php';
+        require '../vendor/phpmailer/src/SMTP.php';
+
+        $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+
+        try {
+            //Server settings - TODO: Replace with actual credentials
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.hostinger.com'; // Example: for Hostinger
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'noreply@flix9hub.com'; // Your email
+            $mail->Password   = 'YourEmailPassword';    // Your email password
+            $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+
+            //Recipients
+            $mail->setFrom('noreply@flix9hub.com', 'Flix9 Hub');
+            $mail->addAddress($email, $fullname);
+
+            //Content
+            $mail->isHTML(true);
+            $mail->Subject = 'Your Flix9 Hub Account Verification Code';
+            $mail->Body    = "Hello $fullname,<br><br>Thank you for registering with Flix9 Hub. Your verification code is: <h2><b>$otp</b></h2><br>Please use this code to verify your account.<br><br>Regards,<br>The Flix9 Hub Team";
+            $mail->AltBody = "Your verification code is: $otp";
+
+            $mail->send();
+
+            // Redirect to the OTP verification page
+            $_SESSION['email_for_verification'] = $email;
+            $_SESSION['success_message'] = 'Registration successful! Please check your email for the verification code.';
+            header('Location: ../verify_otp.php');
+            exit();
+
+        } catch (Exception $e) {
+            // If email fails, handle it. For now, we'll redirect to login with a generic success message.
+            // In a real app, you might want to log the error: error_log("Mailer Error: " . $mail->ErrorInfo);
+            $_SESSION['error_messages'] = ["Registration successful, but we couldn't send a verification email. Please contact support."];
+            header('Location: ../login.php');
+            exit();
+        }
+
     } else {
         // If insertion fails, send a generic error and clean up files.
         $_SESSION['error_messages'] = ["Registration failed due to a server error. Please try again."];
