@@ -3,50 +3,46 @@
 <div class="static-page">
     <h1>Upcoming Projects</h1>
     <div class="investment-grid">
-        <!-- Investment Item 1 -->
-        <div class="investment-item">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/zeGb3MBZY6Y?si=dgDftArYxrTYQGCQ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <div class="investment-info">
-                <p class="hot-deal">🎬 Hot Deal from Velan Productions (WEB) 🔥 Limited Ticket Size – Grab Yours Before It’s Gone!</p>
-                <ul class="investment-details">
-                    <li>🎥 <strong>Title:</strong> Project Alpha</li>
-                    <li>🌟 <strong>Cast:</strong> Actor A, Actress B, Director C</li>
-                    <li>📺 <strong>Rights:</strong> OTT Rights | Tamil Language</li>
-                    <li>💰 <strong>Earn:</strong> 5% – 10% Returns Every Month</li>
-                    <li>⏳ <strong>Tenure:</strong> 3 Months</li>
-                    <li>💵 <strong>Minimum Investment:</strong> ₹50,000</li>
-                    <li>⚙️ <strong>Asset Management Fee:</strong> ₹140</li>
-                </ul>
-                <p class="investment-pitch">
-                    🎯 A perfect short-term, high-potential OTT investment!<br>
-                    🚀 Seats are filling fast – Secure your ticket today!
-                </p>
-            </div>
-        </div>
-        <!-- Investment Item 2 -->
-        <div class="investment-item">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/_zWD-SQ-g4g?si=XOwQZ6PRW-dv7Cjx" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </div>
-            <div class="investment-info">
-                <p class="hot-deal">🎬 Hot Deal from Kumar Productions (WEB) 🔥 Limited Ticket Size – Grab Yours Before It’s Gone!</p>
-                <ul class="investment-details">
-                    <li>🎥 <strong>Title:</strong> Project Beta</li>
-                    <li>🌟 <strong>Cast:</strong> Actor X, Actress Y, Director Z</li>
-                    <li>📺 <strong>Rights:</strong> OTT Rights | Tamil Language</li>
-                    <li>💰 <strong>Earn:</strong> 6% – 12% Returns Every Month</li>
-                    <li>⏳ <strong>Tenure:</strong> 4 Months</li>
-                    <li>💵 <strong>Minimum Investment:</strong> ₹50,000</li>
-                    <li>⚙️ <strong>Asset Management Fee:</strong> ₹140</li>
-                </ul>
-                <p class="investment-pitch">
-                    🎯 A perfect short-term, high-potential OTT investment!<br>
-                    🚀 Seats are filling fast – Secure your ticket today!
-                </p>
-            </div>
-        </div>
+        <?php
+        // Include the database connection
+        require_once 'config/db_connect.php';
+
+        // Fetch all projects from the database
+        $sql = "SELECT * FROM projects ORDER BY created_at DESC";
+        $result = $conn->query($sql);
+
+        if ($result && $result->num_rows > 0) {
+            while ($project = $result->fetch_assoc()) {
+        ?>
+                <!-- Investment Item -->
+                <div class="investment-item">
+                    <div class="video-container">
+                        <iframe src="<?php echo htmlspecialchars($project['video_url']); ?>?si=dgDftArYxrTYQGCQ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                    <div class="investment-info">
+                        <p class="hot-deal"><?php echo htmlspecialchars($project['hot_deal_text']); ?></p>
+                        <ul class="investment-details">
+                            <li>🎥 <strong>Title:</strong> <?php echo htmlspecialchars($project['title']); ?></li>
+                            <li>🌟 <strong>Cast:</strong> <?php echo htmlspecialchars($project['cast']); ?></li>
+                            <li>📺 <strong>Rights:</strong> <?php echo htmlspecialchars($project['ott_rights']); ?> | <?php echo htmlspecialchars($project['language']); ?> Language</li>
+                            <li>💰 <strong>Earn:</strong> <?php echo htmlspecialchars($project['monthly_return_range']); ?> Returns Every Month</li>
+                            <li>⏳ <strong>Tenure:</strong> <?php echo htmlspecialchars($project['tenure_months']); ?> Months</li>
+                            <li>💵 <strong>Minimum Investment:</strong> ₹<?php echo number_format($project['min_investment']); ?></li>
+                            <li>⚙️ <strong>Asset Management Fee:</strong> ₹<?php echo number_format($project['asset_management_fee']); ?></li>
+                        </ul>
+                        <p class="investment-pitch">
+                            <?php echo htmlspecialchars($project['pitch_line1']); ?><br>
+                            <?php echo htmlspecialchars($project['pitch_line2']); ?>
+                        </p>
+                    </div>
+                </div>
+        <?php
+            }
+        } else {
+            echo '<div class="placeholder-content"><p>No investment projects available at the moment. Please check back later.</p></div>';
+        }
+        $conn->close();
+        ?>
     </div>
 </div>
 

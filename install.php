@@ -104,6 +104,83 @@ if ($check_empty && $check_empty->num_rows == 0) {
     echo "<p style='color:green;'>Sample notifications inserted successfully.</p>";
 }
 
+// --- SQL to Create Projects Table ---
+$sql_create_projects_table = "
+CREATE TABLE IF NOT EXISTS `projects` (
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `title` VARCHAR(255) NOT NULL,
+    `cast` VARCHAR(255) NOT NULL,
+    `ott_rights` VARCHAR(100) NOT NULL,
+    `language` VARCHAR(50) NOT NULL,
+    `min_investment` DECIMAL(10, 2) NOT NULL,
+    `tenure_months` INT(3) NOT NULL,
+    `asset_management_fee` DECIMAL(10, 2) NOT NULL,
+    `monthly_return_range` VARCHAR(50) NOT NULL,
+    `pitch_line1` VARCHAR(255) NOT NULL,
+    `pitch_line2` VARCHAR(255) NOT NULL,
+    `video_url` VARCHAR(255) DEFAULT NULL,
+    `poster_image_url` VARCHAR(255) DEFAULT NULL,
+    `hot_deal_text` VARCHAR(255) NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+";
+if ($conn->query($sql_create_projects_table) === TRUE) {
+    echo "<p style='color:green;'>Table 'projects' created successfully.</p>";
+} else {
+    echo "<p style='color:red;'>Error creating 'projects' table: " . $conn->error . "</p>";
+}
+
+// --- SQL to Create Investments Table ---
+$sql_create_investments_table = "
+CREATE TABLE IF NOT EXISTS `investments` (
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT(11) UNSIGNED NOT NULL,
+    `project_id` INT(11) UNSIGNED NOT NULL,
+    `amount` DECIMAL(12, 2) NOT NULL,
+    `investment_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `tenure_months` INT(3) NOT NULL,
+    `status` ENUM('active', 'completed', 'withdrawn') NOT NULL DEFAULT 'active',
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+";
+if ($conn->query($sql_create_investments_table) === TRUE) {
+    echo "<p style='color:green;'>Table 'investments' created successfully.</p>";
+} else {
+    echo "<p style='color:red;'>Error creating 'investments' table: " . $conn->error . "</p>";
+}
+
+// --- SQL to Create Investment Ledger Table ---
+$sql_create_ledger_table = "
+CREATE TABLE IF NOT EXISTS `investment_ledger` (
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `investment_id` INT(11) UNSIGNED NOT NULL,
+    `payout_date` DATE NOT NULL,
+    `payout_amount` DECIMAL(10, 2) NOT NULL,
+    `notes` VARCHAR(255) DEFAULT NULL,
+    FOREIGN KEY (`investment_id`) REFERENCES `investments`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+";
+if ($conn->query($sql_create_ledger_table) === TRUE) {
+    echo "<p style='color:green;'>Table 'investment_ledger' created successfully.</p>";
+} else {
+    echo "<p style='color:red;'>Error creating 'investment_ledger' table: " . $conn->error . "</p>";
+}
+
+// --- SQL to Insert Sample Projects ---
+$check_projects_empty = $conn->query("SELECT id FROM `projects` LIMIT 1");
+if ($check_projects_empty && $check_projects_empty->num_rows == 0) {
+    $sql_insert_sample_projects = "
+    INSERT INTO `projects` (`title`, `cast`, `ott_rights`, `language`, `min_investment`, `tenure_months`, `asset_management_fee`, `monthly_return_range`, `pitch_line1`, `pitch_line2`, `video_url`, `hot_deal_text`, `poster_image_url`) VALUES
+    ('Project Alpha', 'Actor A, Actress B, Director C', 'OTT Rights', 'Tamil', 50000.00, 3, 140.00, '5% – 10%', 'A perfect short-term, high-potential OTT investment!', 'Seats are filling fast – Secure your ticket today!', 'https://www.youtube.com/embed/zeGb3MBZY6Y', '🎬 Hot Deal from Velan Productions (WEB) 🔥 Limited Ticket Size – Grab Yours Before It’s Gone!', 'images/invest-poster-placeholder-1.png'),
+    ('Project Beta', 'Actor X, Actress Y, Director Z', 'OTT Rights', 'Tamil', 50000.00, 4, 140.00, '6% – 12%', 'A perfect short-term, high-potential OTT investment!', 'Seats are filling fast – Secure your ticket today!', 'https://www.youtube.com/embed/_zWD-SQ-g4g', '🎬 Hot Deal from Kumar Productions (WEB) 🔥 Limited Ticket Size – Grab Yours Before It’s Gone!', 'images/invest-poster-placeholder-2.png');
+    ";
+    if ($conn->multi_query($sql_insert_sample_projects)) {
+        echo "<p style='color:green;'>Sample projects inserted successfully.</p>";
+        while ($conn->next_result()) {;} // Clear results
+    }
+}
+
 echo "<h2>Installation Complete!</h2>";
 echo "<p>You can now proceed to use the website. It is recommended to delete this `install.php` file for security reasons.</p>";
 
