@@ -1,3 +1,9 @@
+<?php
+// Start session on all pages
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,8 +22,18 @@
                 <li><a href="trailers.php">Trailers</a></li>
                 <li><a href="investments.php">Investments</a></li>
                 <li><a href="contact.php">Contact Us</a></li>
-                <li><a href="login.php">Login / Register</a></li>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <li><a href="dashboard.php">Dashboard</a></li>
+                    <li><a href="logout.php">Logout</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">Login / Register</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
+        <?php if (isset($_SESSION['user_fullname'])): ?>
+            <div class="welcome-message">
+                Welcome, <?php echo htmlspecialchars($_SESSION['user_fullname']); ?>!
+            </div>
+        <?php endif; ?>
     </header>
     <main>

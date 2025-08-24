@@ -40,8 +40,18 @@ body::after {
 
 /* Header and Navigation */
 header {
+    /* The header tag itself acts as a container */
+}
+
+.welcome-message {
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.2);
+    font-weight: 700;
+}
+
+nav {
     padding: 1rem 0;
-    width: 100%;
     border-bottom: 1px solid rgba(0, 78, 146, 0.5);
 }
 
