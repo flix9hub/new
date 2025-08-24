@@ -426,6 +426,81 @@ input[type="file"] {
     color: #fff;
 }
 
+/* Dashboard Styles */
+.dashboard-container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 20px auto;
+}
+
+.dashboard-container h1, .dashboard-container h2 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+.dashboard-container h2 {
+    font-size: 2rem;
+}
+
+.dashboard-actions {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.btn-dashboard-action {
+    display: inline-block;
+    background-color: #004e92;
+    color: #fff;
+    padding: 12px 25px;
+    margin: 0 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+.btn-dashboard-action:hover {
+    background-color: #0066b2;
+}
+
+.dashboard-section {
+    margin-bottom: 50px;
+    background-color: rgba(0, 4, 40, 0.6);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.placeholder-content {
+    background-color: rgba(0,0,0,0.2);
+    padding: 50px;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px dashed #004e92;
+    font-size: 1.2rem;
+}
+
+.btn-invest {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #28a745; /* Green for invest */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-invest:hover {
+    background-color: #2ebf4f;
+}
+
 /* Footer */
 footer {
     text-align: center;
